@@ -1,0 +1,20 @@
+---
+- hosts: vsrx
+  gather_facts: false
+  connection: local
+  vars:
+    cli:
+      host: "{{ ansible_host }}"
+      port: 22
+      timeout: 300
+      username: jcluser
+      password: Juniper!1
+  tasks:
+    - name: upload local file to var tmp on remote device
+      junos_scp:
+        src: pseudo-junos-image.gz 
+        recursive: yes
+        provider: "{{ cli }}"
+        dest: /var/tmp
+      connection: local
+

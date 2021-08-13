@@ -1,0 +1,31 @@
+ospf-neighbor:
+- command: show ospf neighbor
+- iterate:
+    xpath: ospf-neighbor
+    id: interface-name 
+    tests:
+      - err: 'OSPF interface gone missing: {{pre["interface- name"]}} going to {{pre["neighbor-address"]}}'
+        info: OSPF interface list check 
+        list-not-less:
+      - err: 'New OSPF interface added: {{post["interface- name"]}} going to {{post["neighbor-address"]}}'
+        info: OSPF interface list check 
+        list-not-more:
+      - err: '	was going to {{pre["neighbor-address"]}}, now going to {{post["neighbor- address"]}}'
+        info: OSPF neighbor change check 
+        no-diff: neighbor-address
+      - err: OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor- address"]}} is not up, rather {{post["ospf-neighbor-state"]}}
+        info: All OSPF neighbors are up
+        is-equal: ospf-neighbor-state, Full
+      - err: 'All OSPF neighbors are up'
+        info: 'OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor- address"]}} is not up, rather {{post["ospf-neighbor-state"]}}'
+        not-equal: ospf-neighbor-state, Full
+      - err: 'OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor- address"]}} state change from {{pre["ospf-neighbor-state"]}} to {{post["ospf-neighbor- state"]}}'
+        info: 'No state change for OSPF neighbors' 
+        all-same: ospf-neighbor-state
+      - err: 'OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor- address"]}} is not up, rather {{post["ospf-neighbor-state"]}}'
+        info: 'All OSPF neighbors are up'
+        is-in: ospf-neighbor-state, Up, Full
+      - info: 'OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor- address"]}} is not up, rather {{post["ospf-neighbor-state"]}}'
+        err: 'All OSPF neighbors are up'
+        not-in: ospf-neighbor-state, Up, Full 
+

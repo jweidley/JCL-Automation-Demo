@@ -1,0 +1,12 @@
+// Junos Configuration
+set system host-name {{ hostname }}-ex4300
+set interfaces fxp0 description MGMT unit 0 family inet address {{ mgmt_ip }}/{{ mask }}
+set routing-options static route 0.0.0.0/0 next-hop {{ default_gw }}
+
+{% if vlans %}
+{% for v in vlans %}
+set vlans {{ v.name }} vlan-id {{ v.tag }}
+{% endfor %}
+{% endif %}
+
+// End of configuration

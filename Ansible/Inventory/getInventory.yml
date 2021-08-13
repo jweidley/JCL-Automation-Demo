@@ -1,0 +1,15 @@
+---
+ - name: Run Device Inventory
+   hosts: localhost
+   connection: local
+   gather_facts: no
+
+   tasks:
+    - name: Run a script using an executable in a system path
+      script: /home/jcluser/JCL-Automation-Demo/PyEz/Inventory/getInventoryPrettyAnsible.py
+      register: python_result
+  
+    - name: Get stdout or stderr from the output
+      debug:
+        var: python_result.stdout
+

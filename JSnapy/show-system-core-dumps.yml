@@ -1,0 +1,11 @@
+## working on making this work but it looks like the xpath is different for EX (for vc) and non-vc systems ##
+tests_include:
+  - check_core
+check_core:
+  - command: show system core-dumps
+  - iterate:
+      xpath:  '//multi-routing-engine-results/multi-routing-engine-item/re-name/directory-list'
+      tests:
+        - not-exists: ./directory/file-information/file-name
+          err: "Test Failed!!core file exist <{{post['./directory/file-information/filename']}}> on {{post['./../re-name']}}"
+          info: "Test Succeeded!!!There is no core file"

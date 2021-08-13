@@ -1,0 +1,81 @@
+tests_include:
+  - ospf-neighbor
+  - ospf_interface
+  - OSPF-DB
+  - ospf-md5
+
+ospf-md5:
+- command: show configuration protocols ospf | display inheritance | display xml
+- iterate:
+    id: name
+    tests:
+    - err: ' OSPF interface {{post["name"]}} is configured without authentication.'
+      exists: authentication
+      info: All OSPF interface has authentication enabled
+    - err: 'OSPF interface {{post["name"]}} has authentication enabled'
+      not-exists: authentication
+      info: 'OSPF interface {{post["name"]}} is configured without authentication.'
+    - err: ' OSPF interface {{post["name"]}} seems not a physical interface.'
+      contains: name, -
+      info: All OSPF interface is physical interface.
+    xpath: protocols/ospf/area/interface
+
+ospf-neighbor:
+- command: show ospf neighbor
+- iterate:
+    id: interface-name
+    tests:
+     - err: 'OSPF interface gone missing: {{pre["interface-name"]}} going to {{pre["neighbor-address"]}}'
+       info: OSPF interface list check
+       list-not-less:
+     - err: 'New OSPF interface added: {{post["interface-name"]}} going to {{post["neighbor-address"]}}'
+       info: OSPF interface list check
+       list-not-more:
+     - err: '   was going to {{pre["neighbor-address"]}}, now going to {{post["neighbor-address"]}}'
+       info: OSPF neighbor change check
+       no-diff: neighbor-address
+     - err: OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor-address"]}} is not up, rather {{post["ospf-neighbor-state"]}}
+       info: All OSPF neighbors are up
+       is-equal: ospf-neighbor-state, Full
+     - err: 'All OSPF neighbors are up'
+       info: 'OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor-address"]}} is not up, rather {{post["ospf-neighbor-state"]}}'
+       not-equal: ospf-neighbor-state, Full
+     - err: 'OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor-address"]}} state change from  {{pre["ospf-neighbor-state"]}} to {{post["ospf-neighbor-state"]}}'
+       info: 'No state change for OSPF neighbors'
+       all-same: ospf-neighbor-state
+     - err: 'OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor-address"]}} is not up, rather {{post["ospf-neighbor-state"]}}'
+       info: 'All OSPF neighbors are up'
+       is-in: ospf-neighbor-state, Up, Full
+     - info: 'OSPF neighbor on {{post["interface-name"]}} to {{post["neighbor-address"]}} is not up, rather {{post["ospf-neighbor-state"]}}'
+       err: 'All OSPF neighbors are up'
+       not-in: ospf-neighbor-state, Up, Full
+    xpath: ospf-neighbor
+
+ospf_interface:
+- command: show ospf interface
+- iterate:
+    tests:
+    - err: OSPF interface {{post["interface-name"]}} does not have any neighbors
+      info: OSPF interfaces must have at least 1 neighbor
+      is-gt: neighbor-count, 0
+    - err: 'OSPF interfaces must have at least 1 neighbor, {{post["interface-name"]}} has atleast 1 neighbor'
+      info: 'OSPF interface {{post["interface-name"]}} does not have any neighbors'
+      is-lt: neighbor-count, 1
+    xpath: ospf-interface[interface-name != "lo0.0"]
+
+OSPF-DB:
+- command: show ospf database detail
+- iterate:
+    id: ../advertising-router
+    tests:
+    - err: Router {{post["../advertising-router"]}} has {{post["link-count"]}} links
+      in-range: link-count, 5, 10
+      info: OSPF router links [5..10]
+    - err: Router {{post["../advertising-router"]}} has {{post["link-count"]}} links
+      info: OSPF router links not[5..10]
+      not-range: link-count, 5, 10
+    - err: 'Router {{post["../advertising-router"]}} has changed to {{post["link-count"]}} links earlier it was {{pre["link-count"]}} '
+      info: 'OSPF router links not changed significantly for {{post["../advertising-router"]}}'
+      delta: link-count, 20%
+    xpath: '/ospf-database-information/ospf-database/ospf-router-lsa'
+

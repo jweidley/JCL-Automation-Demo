@@ -1,0 +1,12 @@
+---
+ - name: Configuration Rollback
+   hosts: all
+   connection: local
+   gather_facts: no
+
+   tasks:
+   - name: rollback 1 Configuration Change
+     junos_config:
+       provider: "{{ credentials }}"
+       rollback: 1
+       comment: configured by Ansible rollBackConfig

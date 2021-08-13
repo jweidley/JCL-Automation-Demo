@@ -1,0 +1,10 @@
+---
+ - name: Build Template Configs
+   hosts: localhost
+   connection: local
+   gather_facts: no
+
+   tasks:
+      - name: Generate VLAN configuration
+        template: src=Templates/junos-stig-config.j2 dest=Configs/junosSTIG-Baseline.set
+

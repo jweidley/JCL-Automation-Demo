@@ -1,0 +1,22 @@
+---
+#########################################################################################################
+# VLANs
+#  - tag: VLAN ID (1-4095)
+#  - name: Friendly name of VLAN (less than 31 characters)
+#########################################################################################################
+vlans:
+  - tag: 100
+    name: v100.users.com
+  - tag: 101
+    name: v101.users.com
+  - tag: 102
+    name: v102.users.com
+  - tag: 103
+    name: v103.users.com
+  - tag: 200
+    name: v200-native.users.com
+  - tag: 301
+    name: v301.voip.com
+
+## end of file ##
+

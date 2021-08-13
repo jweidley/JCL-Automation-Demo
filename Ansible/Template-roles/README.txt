@@ -1,0 +1,5 @@
+
+
+ansible-playbook generate.yml
+
+

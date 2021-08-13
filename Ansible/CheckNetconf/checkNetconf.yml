@@ -1,0 +1,12 @@
+---
+ - name: Device Connectivity Check
+   hosts: all
+   connection: local
+   gather_facts: no
+   
+   tasks:
+    - name: Verify netconf reachability of junos devices
+      junos_netconf: 
+       provider: "{{ credentials }}"
+       netconf_port: 830
+       state: present

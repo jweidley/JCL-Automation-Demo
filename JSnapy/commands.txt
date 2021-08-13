@@ -1,0 +1,5 @@
+jsnapy --snap pre -f config.yml 
+jsnapy --snap post -f config.yml 
+jsnapy --check pre post -f config.yml
+
+jsnapy --diff /etc/jsnapy/snapshots/192.168.73.11_pre_show_ospf_neighbor.xml /etc/jsnapy/snapshots/192.168.73.11_post_show_ospf_neighbor.xml 

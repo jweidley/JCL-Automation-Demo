@@ -1,0 +1,15 @@
+---
+system:
+  root_passwd: "$6$e2E7qbbs$wLMd7KFGI/mlfDo/OIOaX3r27QaTNURESLURHmzwPtd0dVOCviavRg8b5v4sV8PIOzYktHtsQfKD8n0q03Vko0"
+  aaa_type: radius
+  aaa_info:
+    - ip: 1.1.1.1
+      secret: PASSWORD
+    - ip: 1.1.2.2
+      secret: PASSWORD
+
+snmp:
+  user: ITPIE
+  user_passwd: H@rdP@$$w0RD
+  auth: authentication-sha
+  priv: privacy-aes128

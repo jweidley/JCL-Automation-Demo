@@ -1,0 +1,26 @@
+---
+all:
+  vars:
+    ansible_python_interpreter: '/usr/bin/python3'
+    ansible_network_os: 'junos'
+
+  hosts:
+    vsrx1:
+      ansible_host: 100.123.12.0
+    vsrx2:
+      ansible_host: 100.123.12.1
+    vsrx3:
+      ansible_host: 100.123.12.2
+    vmx1: 
+      ansible_host: 100.123.1.0
+
+  children:
+    vmx:
+      hosts:
+        vmx1:
+    vsrx:
+      hosts:
+        vsrx1:
+        vsrx2:
+        vsrx3:
+

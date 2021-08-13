@@ -1,0 +1,20 @@
+tests_include:
+- chassis_hardware
+
+chassis_hardware:
+- command: show chassis hardware
+- iterate:
+    xpath: '//chassis/chassis-module'
+    id: './name'
+    tests:
+      - no-diff: serial-number
+        err: "Test Failed!! serial-number got changed, before it was <{{pre['serial- number']}}>, now it is <{{post['serial-number']}}> with name <{{id_0}}>"
+        info: "Test Succeeded!! serial-number are all same for name <{{id_0}}>!!!"
+- iterate:
+    xpath: '//chassis/chassis-module/chassis-sub-module' 
+    id: './name'
+    tests:
+      - no-diff: serial-number
+        err: "Test Failed!! serial-number got changed, before it was <{{pre['serial- number']}}>, now it is <{{post['serial-number']}}> with name <{{id_0}}>"
+        info: "Test Succeeded!! serial-number are all same for name <{{pre['../name']}}> <{{id_0}}>!!!"
+

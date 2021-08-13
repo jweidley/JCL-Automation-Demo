@@ -1,0 +1,5 @@
+---
+- name: Render Arista Configuration
+  template: 
+    src=arista.j2 
+    dest={{ playbook_dir }}/Configs/arista.conf

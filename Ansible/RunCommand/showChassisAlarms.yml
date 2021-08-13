@@ -1,0 +1,19 @@
+---
+ - name: Run Command Playbook
+   hosts: all
+   connection: local
+   gather_facts: no
+
+   tasks:
+    - name: run show chassis and system alarms
+      junos_command:
+        provider: "{{ credentials }}"
+        commands: 
+          - show chassis alarms
+          - show system alarms
+        #display: json
+      register: cli_result
+
+    - name: Get stdout or stderr from the output
+      debug:
+        var: cli_result.stdout

@@ -1,0 +1,14 @@
+// Arista Configuration
+!
+hostname {{ hostname }}-7800
+interfaces management 0 ip address {{ mgmt_ip }}/{{ mask }}
+ip route 0.0.0.0/0 {{ default_gw }}
+!
+{% if vlans %}
+{% for v in vlans %}
+!
+vlan {{ v.tag }} 
+ name {{ v.name }}
+!
+{% endfor %}
+{% endif %}

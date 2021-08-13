@@ -1,0 +1,11 @@
+hosts:
+  - include: devices.yml
+    group: EX
+
+tests:
+  - show-chassis-hardware.yml
+  - show-chassis-fpc.yml
+  - show-chassis-alarms.yml
+  - show-system-alarms.yml
+  - show-system-core-dumps.yml
+  - show-interfaces-terse-ge.yml
