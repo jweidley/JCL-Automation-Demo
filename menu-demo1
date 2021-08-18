@@ -1,0 +1,80 @@
+#! /bin/bash
+# Reference: https://gist.github.com/wafsek/b78cb3214787a605a28b
+
+# Set menu colors
+export NEWT_COLORS='
+    root=white,black
+    roottext=,black
+    border=black,lightgray
+    window=lightgray,lightgray
+    shadow=black,gray
+    title=black,lightgray
+    button=black,cyan
+    actbutton=white,cyan
+    compactbutton=black,lightgray
+    checkbox=black,lightgray
+    actcheckbox=lightgray,cyan
+    entry=black,lightgray
+    disentry=gray,lightgray
+    label=black,lightgray
+    listbox=black,lightgray
+    actlistbox=black,cyan
+    sellistbox=lightgray,black
+    actsellistbox=lightgray,black
+    textbox=black,lightgray
+    acttextbox=black,cyan
+    emptyscale=,gray
+    fullscale=,cyan
+    helpline=white,black
+' \
+
+#####################
+# Main
+#####################
+clear
+while [ 1 ]
+do
+CHOICE=$(
+whiptail --backtitle "JCL Automation Demo" --title "Demo1 Menu" --menu "Make your choice" 16 50 9 \
+	"Step 1)" "Show OSPF and BGP Neighbors"   \
+	"Step 2)" "Build routing on all hosts"   \
+	"Step 3)" "Check OSPF and BGP Neighbors"   \
+	"x)" "Exit Menu"  3>&2 2>&1 1>&3	
+)
+
+case $CHOICE in
+	"Step 1)")   clear
+		echo "#############################################"
+		echo " BGP and OSPF Neighbors"
+		echo " - notice neither protocol is configured"
+		echo "#############################################"
+		cd /home/jcluser/JCL-Automation-Demo/Ansible/RunCommand; ansible-playbook -i hosts showBgpOspfNeighbors.yml
+		read -p "--[Press enter to continue]--"
+	;;
+
+	"Step 2)")   clear
+		echo "#############################################"
+		echo " Building Routing on ALL hosts"
+		echo " - This will take a few minutes...be patient"
+		echo "#############################################"
+		cd /home/jcluser/demo1-one_touch_network; ansible-playbook -i hosts site.yml
+		read -p "--[Press enter to continue]--"
+	;;
+
+	"Step 3)")   clear
+		echo "#############################################"
+		echo " BGP and OSPF Neighbors"
+		echo " - notice the neighbor relationships"
+		echo "#############################################"
+		cd /home/jcluser/JCL-Automation-Demo/Ansible/RunCommand; ansible-playbook -i hosts showBgpOspfNeighbors.yml
+		read -p "--[Press enter to continue]--"
+	;;
+
+	"x)") 	clear
+		exit
+        ;;
+esac
+done
+exit
+
+## End of Script ##

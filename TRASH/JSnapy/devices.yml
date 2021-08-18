@@ -1,0 +1,15 @@
+SRX: 
+  - 100.123.12.0:
+       username: jcluser
+       passwd: Juniper!1
+  - 100.123.12.1:
+       username: jcluser
+       passwd: Juniper!1
+  - 100.123.12.2:
+       username: jcluser
+       passwd: Juniper!1
+MX: 
+  - 100.123.1.0:
+       username: jcluser
+       passwd: Juniper!1
+

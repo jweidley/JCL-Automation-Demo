@@ -1,0 +1,10 @@
+---
+# initial defaults
+ansible_user: 'jcluser'
+ansible_pass: 'Juniper!1'
+ansible_connection: 'netconf'
+ansible_port: '22'
+netconf_user: root
+netconf_passwd: Juniper!1
+netconf_port: '22'
+netconf_timeout: '10'

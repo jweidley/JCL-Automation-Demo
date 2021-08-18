@@ -1,0 +1,75 @@
+#! /bin/bash
+# Reference: https://gist.github.com/wafsek/b78cb3214787a605a28b
+
+# Set menu colors
+export NEWT_COLORS='
+    root=white,black
+    roottext=,black
+    border=black,lightgray
+    window=lightgray,lightgray
+    shadow=black,gray
+    title=black,lightgray
+    button=black,cyan
+    actbutton=white,cyan
+    compactbutton=black,lightgray
+    checkbox=black,lightgray
+    actcheckbox=lightgray,cyan
+    entry=black,lightgray
+    disentry=gray,lightgray
+    label=black,lightgray
+    listbox=black,lightgray
+    actlistbox=black,cyan
+    sellistbox=lightgray,black
+    actsellistbox=lightgray,black
+    textbox=black,lightgray
+    acttextbox=black,cyan
+    emptyscale=,gray
+    fullscale=,cyan
+    helpline=white,black
+' \
+
+#####################
+# Main
+#####################
+clear
+while [ 1 ]
+do
+CHOICE=$(
+whiptail --backtitle "JCL Automation Demo" --title "Automation Menu" --menu "Make your choice" 16 50 9 \
+	"1)" "Device Inventory"   \
+	"2)" "Chassis Details"   \
+	"3)" "Chassis Alarms"   \
+	"4)" "Save Rescue Configuration"   \
+	"x)" "Exit Menu"  3>&2 2>&1 1>&3	
+)
+
+case $CHOICE in
+	"1)")   clear
+		cd /home/jcluser/JCL-Automation-Demo/Ansible/Inventory; ansible-playbook ./getInventory.yml
+		read -p "--[Press enter to continue]--"
+	;;
+
+	"2)")   clear
+		cd /home/jcluser/JCL-Automation-Demo/Ansible/RunCommand; ansible-playbook -i hosts showChassisHw.yml
+		read -p "--[Press enter to continue]--"
+	;;
+
+	"3)")   clear
+		cd /home/jcluser/JCL-Automation-Demo/Ansible/RunCommand; ansible-playbook -i hosts showAlarms.yml
+		read -p "--[Press enter to continue]--"
+	;;
+
+	"4)")   clear
+		cd /home/jcluser/JCL-Automation-Demo/Ansible/RunCommand; ansible-playbook -i hosts requestSysConfigRescueSave.yml
+		read -p "--[Press enter to continue]--"
+	;;
+
+	"x)") 	clear
+		exit
+        ;;
+esac
+#whiptail --msgbox "$result" 20 78
+done
+exit
+
+## End of Script ##

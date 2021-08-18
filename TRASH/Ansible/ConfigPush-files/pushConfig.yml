@@ -1,0 +1,19 @@
+---
+- name: Push Configuration Change
+  hosts: all
+  roles:
+  - Juniper.junos 
+  connection: local
+  gather_facts: no
+
+  tasks: 
+  - name: Checking NETCONF connectivity
+    wait_for: host={{ ansible_host }} port=830  timeout=5
+
+  - name: Create Ansible user on devices
+    juniper_junos_config:
+      src: 'Configs/add-ansible-user.set'
+      format: 'set'
+      load: 'merge'
+      comment: 'Configured by Ansible configpush-files playbook'
+    register: response

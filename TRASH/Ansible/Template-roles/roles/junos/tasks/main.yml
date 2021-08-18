@@ -1,0 +1,5 @@
+---
+- name: Render Junos Configuration
+  template: 
+    src=junos.j2 
+    dest={{ playbook_dir }}/Configs/junos.conf

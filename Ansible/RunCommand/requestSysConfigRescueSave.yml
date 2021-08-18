@@ -1,0 +1,16 @@
+---
+ - name: Run Command Playbook
+   hosts: all
+   connection: local
+   gather_facts: no
+
+   tasks:
+    - name: Save the Rescue Configuration
+      junos_command:
+        provider: "{{ credentials }}"
+        rpcs: request-save-rescue-configuration
+      register: cli_result
+
+    - name: Get stdout or stderr from the output
+      debug:
+        var: cli_result.stdout

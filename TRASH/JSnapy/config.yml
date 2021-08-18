@@ -1,0 +1,16 @@
+# for one device, can be given like this:
+hosts:
+  - include: devices.yml
+    group: SRX
+
+tests:
+  - test-ospf-all-operator.yml
+#  - show-chassis-hardware.yml
+#  - show-chassis-fpc.yml
+#  - show-chassis-alarms.yml
+#  - show-system-alarms.yml
+#  - show-interfaces-terse-ge.yml
+#  - show-system-core-dumps.yml #!! Dont work on vSRX
+#  - show-ospf-neighbors.yml
+#  - show-bgp-summary.yml
+#  - show-route-summary.yml

@@ -1,0 +1,14 @@
+---
+ - name: Push Configuration to Devices
+   hosts: all
+   connection: local
+   gather_facts: no
+
+   tasks:
+   - name: Push Embedded set commands to Devices
+     junos_config:
+      provider: "{{ credentials }}"
+      lines:
+       - set system name-server 4.2.2.1
+       - set system name-server 4.2.2.2
+      comment: configured by Ansible configpush-embedded

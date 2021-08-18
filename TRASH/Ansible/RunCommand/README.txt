@@ -68,7 +68,7 @@ vsrx3                      : ok=2    changed=0    unreachable=0    failed=0    s
 
 ===================
 
-[jcluser@centos RunCommand]$ ansible-playbook -i hosts showAlarms.yml 
+[jcluser@centos RunCommand]$ ansible-playbook -i hosts showChassisAlarms.yml 
 
 PLAY [Run Command Playbook] ****************************************************************************************************************************************************************************
 

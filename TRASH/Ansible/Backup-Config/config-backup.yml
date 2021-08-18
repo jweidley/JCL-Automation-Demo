@@ -1,0 +1,14 @@
+---
+- name: "Get Junos OS configuration"
+  hosts: all
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: "Save configuration to a file"
+      junos_config:
+        provider: "{{ credentials }}"
+        backup: yes
+        backup_options:
+          filename: "{{ ansible_host }}-backup.cfg"
+          dir_path: "{{ playbook_dir }}/Configs"

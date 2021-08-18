@@ -1,0 +1,8 @@
+---
+- name: Generate Multi-Vendor configuration files
+  hosts: localhost
+
+  roles:
+    - junos
+    - arista
+    - cisco

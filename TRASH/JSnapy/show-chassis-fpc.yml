@@ -1,0 +1,20 @@
+tests_include:
+- check_chassis_fpc
+
+check_chassis_fpc:
+  - command: show chassis fpc pic-status
+  - iterate: 
+      xpath: //fpc 
+      id: ./slot 
+      tests:
+        - all-same: state
+          err: "Test Failed!!! state of \"{{post['description']}}\" at fpc {{post['slot']}} are not all same!!, it is <{{post['state']}}> "
+          info: "Test Succeeded!! state of \"{{post['description']}}\" at fpc {{post['slot']}} are all same, it is now <{{post['state']}}>!!!"
+  - iterate:
+      xpath: //fpc/pic 
+      id: ./pic-slot 
+      tests:
+        - all-same: pic-state
+          err: "Test Failed!!! state of \"{{post['pic-type']}}\" at fpc {{post['../slot']}} pic {{post['pic-slot']}} are not all same!!, it is <{{post['pic-state']}}> "
+          info: "Test Succeeded!! state of \"{{post['pic-type']}}\" at fpc {{post['../slot']}} pic {{post['pic-slot']}} are all same, it is now <{{post['pic-state']}}>!!!"
+

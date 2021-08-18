@@ -1,0 +1,6 @@
+---
+- name: Render Cisco Configuration
+  template: 
+    src=cisco.j2 
+    dest={{ playbook_dir }}/Configs/cisco.conf
+

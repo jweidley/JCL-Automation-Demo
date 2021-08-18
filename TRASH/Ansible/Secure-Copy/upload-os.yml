@@ -12,7 +12,7 @@
   tasks:
     - name: upload local file to var tmp on remote device
       junos_scp:
-        src: pseudo-junos-image.tgz 
+        src: pseudo-junos-image.gz 
         recursive: yes
         provider: "{{ cli }}"
         dest: /var/tmp

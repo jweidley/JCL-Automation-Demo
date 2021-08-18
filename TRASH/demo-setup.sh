@@ -22,7 +22,7 @@ echo "################################################################"
 #git clone https://github.com/jweidley/JCL-Automation-Demo.git /home/jcluser/
 
 # Create required directories to store Jsnapy snapshots
-echo "- Creating directories for JSnapy Snapshots..."
+echo "  - Creating directories for JSnapy Snapshots..."
 if [ ! -d "/home/jcluser/jsnapy" ]
 then
 	echo "    + INFO: Creating $JSNAPY_DIR"
@@ -42,7 +42,7 @@ fi
 
 
 # Install required Python3 libraries
-echo "- Installing required Python3 libraries..."
+echo "  - Installing required Python3 libraries..."
 echo "    + Upgrading PIP..."
 /bin/python3 -m pip install --upgrade pip
 echo
@@ -50,22 +50,15 @@ echo "    + Installing PrettyTables..."
 pip3 install prettytable
 
 # Create fake upgrade image for large file transfer
-echo "- Create large file for large transfer demo..."
+echo "  - Create large file for large transfer demo..."
 dd if=/dev/zero of=pseudo-junos-image.tgz bs=1M count=5
 echo
 echo "  - Move file to playbook directory..."
 mv pseudo-junos-image.tgz /home/jcluser/JCL-Automation-Demo/Ansible/Secure-Copy/
 
-# Add JCL-Automation-Demo directory to path
-echo "  - Adding Demo Repo to PATH..." 
-echo "export PATH=\"\$HOME/JCL-Automation-Demo:\$PATH\"" >> /home/jcluser/.bash_profile
-
 ### Done ###
 echo
 echo
-echo "-----------------------------------------------------"
-echo "Demo Setup is complete."
-echo "!! Logout and log back into to use the new pathing !!"
-echo "-----------------------------------------------------"
+echo "!...Demo Setup is Complete...!"
 
 ## End of Script ##
