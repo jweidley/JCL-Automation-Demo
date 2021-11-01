@@ -1,6 +1,7 @@
 ---
+root_passwd: "$6$e2E7qabs$wLMd7KFGI/mleFo/OIOaX3r27QaRMARESLURHmzwPtd0dVOCviavRg8b5v4sV8PIOzYktHtsQfKD8n0q03Vko0"
+
 system:
-  root_passwd: "$6$e2E7qbbs$wLMd7KFGI/mlfDo/OIOaX3r27QaTNURESLURHmzwPtd0dVOCviavRg8b5v4sV8PIOzYktHtsQfKD8n0q03Vko0"
   aaa_type: radius
   aaa_info:
     - ip: 1.1.1.1

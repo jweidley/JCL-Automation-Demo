@@ -1,30 +1,6 @@
 set system time-zone America/New_York
-set system default-address-selection
-set system no-redirects
-set system no-ping-record-route
-set system no-ping-time-stamp
-set system internet-options tcp-drop-synfin-set
-set system internet-options no-source-quench
-set system internet-options no-tcp-reset drop-tcp-with-syn-only
-set system ports console log-out-on-disconnect
-set system ports console insecure
-set system ports auxiliary disable
-set system ports auxiliary insecure
-set system login retry-options tries-before-disconnect 3
-set system login retry-options backoff-threshold 1
-set system login retry-options backoff-factor 6
-set system login retry-options minimum-time 30
-set system login retry-options maximum-time 60
-set system login retry-options lockout-period 10
-set system login password minimum-length 15
-set system login password change-type character-sets
-set system login password minimum-changes 4
-set system login password minimum-numerics 2
-set system login password minimum-upper-cases 2
-set system login password minimum-lower-cases 2
-set system login password minimum-punctuations 2
-set system login password format sha1
-set system root-authentication encrypted-password {{ system.root_passwd }}
+set system root-authentication encrypted-password {{ root_passwd }}
+
 set system authentication-order {{ system.aaa_type }}
 {% for svr in system.aaa_info %}
 set system radius-server {{ svr.ip }} port 1812
@@ -35,6 +11,7 @@ set system accounting events interactive-commands
 set system accounting destination radius server {{ svr.ip }} accounting-port 1813
 set system accounting destination radius server {{ svr.ip }} secret {{ svr.secret }}
 {% endfor %}
+
 set snmp v3 usm local-engine user {{ snmp.user }} {{ snmp.auth }} authentication-password {{ snmp.user_passwd }}
 set snmp v3 usm local-engine user {{ snmp.user }} {{ snmp.priv }} privacy-password {{ snmp.user_passwd }}
 set snmp v3 vacm security-to-group security-model usm security-name {{ snmp.user }} group SNMPV3GROUP
