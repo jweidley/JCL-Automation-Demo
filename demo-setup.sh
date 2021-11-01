@@ -22,6 +22,9 @@ echo "################################################################"
 #git clone https://github.com/jweidley/JCL-Automation-Demo.git /home/jcluser/
 
 # Create required directories to store Jsnapy snapshots
+echo "- Setting up vim for editing..."
+echo "set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab" > /home/jcluser/.vimrc
+
 echo "- Creating directories for JSnapy Snapshots..."
 if [ ! -d "/home/jcluser/jsnapy" ]
 then
